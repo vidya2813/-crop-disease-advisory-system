@@ -1,0 +1,44 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crop-advisory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crop-advisory
+  template:
+    metadata:
+      labels:
+        app: crop-advisory
+    spec:
+      containers:
+        - name: crop-advisory
+          image: crop-advisory:v6
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: "jdbc:mysql://crop-mysql:3306/crop_advisory"
+            - name: DB_USERNAME
+              value: "root"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: crop-mysql-secret
+                  key: MYSQL_ROOT_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crop-advisory-service
+spec:
+  type: NodePort
+  selector:
+    app: crop-advisory
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
