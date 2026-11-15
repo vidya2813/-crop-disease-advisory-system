@@ -247,9 +247,25 @@
         <p class="text-muted">
             Image upload and AI analysis will be connected in the next stage.
         </p>
-        <button class="btn btn-success btn-lg" disabled>
-            Upload Image (Coming Soon)
-        </button>
+        <div th:if="${message}"
+     class="alert alert-info"
+     role="alert"
+     th:text="${message}">
+      </div>
+        
+        <form action="/upload" method="post" enctype="multipart/form-data">
+
+    <input type="file"
+           name="image"
+           accept="image/*"
+           class="form-control mb-3"
+           required>
+
+    <button type="submit" class="btn btn-success btn-lg">
+        Upload Crop Image
+    </button>
+
+</form>
     </div>
 </section>
 
