@@ -24,8 +24,17 @@ pipeline {
         bat '"C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/docker.exe" --version'
 
         bat '"C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/docker.exe" build -t crop-advisory:%BUILD_NUMBER% .'
+        }
     }
-}
+
+        stage('Kubernetes Connection Check') {
+            steps {
+                bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" config current-context'
+
+                bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" get nodes'
+            }
+        }
+
         
     }
 }
