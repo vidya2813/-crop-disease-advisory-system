@@ -35,15 +35,18 @@ pipeline {
                 bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" get nodes'
             }
         }
+    stage('Kubernetes Deployment') {
+    steps {
+        bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" apply -f app-k8s.yaml'
 
-        stage('Kubernetes Deployment') {
-            steps {
-                bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" set image deployment/crop-advisory crop-advisory=crop-advisory:%BUILD_NUMBER%'
+        bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" set image deployment/crop-advisory crop-advisory=crop-advisory:%BUILD_NUMBER%'
 
-                bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" rollout status deployment/crop-advisory'
-            }
-        }
+        bat 'set KUBECONFIG=C:/Users/hemal/.kube/config && "C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/kubectl.exe" rollout status deployment/crop-advisory'
     }
+    }
+        
+        
+}
 
     post {
         always {
