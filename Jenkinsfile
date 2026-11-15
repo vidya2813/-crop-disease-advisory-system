@@ -19,12 +19,13 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
-
         stage('Docker Build') {
-            steps {
-                bat 'docker --version'
-                bat 'docker build -t crop-advisory:%BUILD_NUMBER% .'
-            }
-        }
+    steps {
+        bat '"C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/docker.exe" --version'
+
+        bat '"C:/Users/hemal/AppData/Local/Programs/DockerDesktop/resources/bin/docker.exe" build -t crop-advisory:%BUILD_NUMBER% .'
+    }
+}
+        
     }
 }
