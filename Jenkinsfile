@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -16,6 +17,13 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'mvn clean package'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker --version'
+                bat 'docker build -t crop-advisory:%BUILD_NUMBER% .'
             }
         }
     }
