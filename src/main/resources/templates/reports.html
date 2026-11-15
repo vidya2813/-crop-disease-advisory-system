@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crop Reports - CropCare</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+    <h2 class="text-success text-center">
+        Crop Upload Reports
+    </h2>
+
+    <p class="text-muted text-center">
+        View uploaded crop images and their details.
+    </p>
+
+    <!-- Crop Reports Table -->
+    <div class="table-responsive mt-4">
+
+        <table class="table table-bordered table-striped table-hover">
+
+            <thead class="table-success">
+                <tr>
+                    <th>Report ID</th>
+                    <th>Image Name</th>
+                    <th>Upload Date and Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="report : ${reports}">
+                    <td th:text="${report.id}"></td>
+                    <td th:text="${report.imageName}"></td>
+                    <td th:text="${#temporals.format(report.uploadedAt, 'dd-MM-yyyy hh:mm a')}"></td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(reports)}">
+                    <td colspan="3" class="text-center text-muted">
+                        No crop reports available.
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Sample Disease Information -->
+    <div class="card mt-5 shadow-sm">
+
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Sample Crop Disease Information</h4>
+        </div>
+
+        <div class="card-body">
+
+            <h5 class="text-success">Example: Tomato Early Blight</h5>
+
+            <p>
+                Early blight is a common fungal disease that can
+                affect tomato plants.
+            </p>
+
+            <h6>Common Symptoms:</h6>
+
+            <ul>
+                <li>Brown spots on older leaves.</li>
+                <li>Yellowing around affected areas.</li>
+                <li>Leaves may gradually dry and fall.</li>
+            </ul>
+
+            <h6>Possible Causes:</h6>
+
+            <ul>
+                <li>Fungal infection.</li>
+                <li>Prolonged leaf moisture.</li>
+                <li>Warm and humid environmental conditions.</li>
+            </ul>
+
+            <h6 class="text-success">General Advisory Suggestions:</h6>
+
+            <ul>
+                <li>Remove affected leaves carefully.</li>
+                <li>Avoid unnecessary water accumulation around plants.</li>
+                <li>Water near the soil instead of wetting leaves.</li>
+                <li>Keep sufficient space between plants for airflow.</li>
+                <li>Consult an agricultural expert for appropriate treatment.</li>
+            </ul>
+
+            <div class="alert alert-warning mt-3">
+                <strong>Note:</strong>
+                This is sample educational information.
+                CropCare does not currently identify diseases using AI.
+                Actual disease diagnosis requires expert verification.
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-center mt-4 mb-5">
+        <a href="/" class="btn btn-success">
+            Back to Home
+        </a>
+    </div>
+
+</body>
+</html>

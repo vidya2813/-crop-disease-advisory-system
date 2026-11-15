@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
+
+    private final CropReportRepository cropReportRepository;
+
+    public HomeController(CropReportRepository cropReportRepository) {
+        this.cropReportRepository = cropReportRepository;
+    }
 
     @GetMapping("/")
     public String home() {
@@ -56,8 +63,13 @@ public class HomeController {
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(image.getInputStream(), filePath);
 
+            CropReport report = new CropReport(
+                fileName, LocalDateTime.now());
+
+            cropReportRepository.save(report);
+
             redirectAttributes.addFlashAttribute(
-                "message", "Image uploaded successfully!");
+                "message", "Image uploaded and report saved successfully!");
 
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute(
